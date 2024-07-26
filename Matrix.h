@@ -1,3 +1,11 @@
+/**
+ * @brief Functions for matrix computations. This code is based on the book Fundamentals of Matrix Computations, by David S. Watkins.
+ *
+ * @author Rennisson Davi D. Alves
+ * Contact: rennisson.alves@gmail.com
+ *
+ */
+
 #ifndef MATRIX_H
 #define MATRIX_H
 #include <string>
