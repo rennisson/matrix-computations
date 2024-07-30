@@ -108,6 +108,22 @@ class Matrix {
         vector<double>* rowBackwardElimination(vector<double>* b);
 
         /**
+         * Calculates the Cholesky's factor of matrix A and verify if A is positive definite using inner-product form.
+         * In a n x n matrix, this algorithm performs n^3/3 floating operations
+         * 
+         * @returns Cholesky's factor if A is positive definite. Otherwise, returns NULL
+         */
+        vector<vector<double>>* innerProdCholeskyFactor();
+
+        /**
+         * Calculates the Cholesky's factor of matrix A and verify if A is positive definite using outer-product form.
+         * In a n x n matrix, this algorithm performs n^3/3 floating operations. Recursive version.
+         * 
+         * @returns Cholesky's factor if A is positive definite. Otherwise, returns NULL
+         */
+        vector<vector<double>>* outerProdCholeskyFactor(vector<vector<double>> A, vector<vector<double>>* R, int row, int col);
+
+        /**
          * Matrices blocks multiplication (AX = B)
          * 
          * @param[in] X block matrix X
@@ -130,6 +146,23 @@ class Matrix {
          * @returns 'true' if matrix is lower triangular, 'false' otherwise.
          */
         bool isLowerTriangular();
+
+        /**
+         * Transpose of a vector
+         * 
+         * @param[in] X vector
+         * @returns vector transpose of X
+         */
+        vector<double>* transpose(vector<double>* X);
+
+        /**
+         * Performs outer product between two vectors
+         * 
+         * @param[in] u, v vector
+         * @returns a matrix with dimension n x m, where n is the number of lines in 'u'
+         *  and m is the number of lines in 'v'
+         */
+        vector<vector<double>>* outerProduct(vector<double>* u, vector<double>* v);
 
     public:
         /**
@@ -223,9 +256,10 @@ class Matrix {
          * Calculates the Cholesky's factor of matrix A and verify if A is positive definite.
          * In a n x n matrix, this algorithm performs n^3/3 floating operations
          * 
-         * @returns Cholesky's factor if A is positive definite. Otherwise, returns NULL
+         * @param[in] mode "inner" for inner-product form (default), or "outer" for outer-product form.
+         * @returns Cholesky's factor if A is positive definite. Otherwise, returns nullptr
          */
-        vector<vector<double>>* choleskyFactor();
+        vector<vector<double>>* choleskyFactor(string mode = "inner");
 
         /**
          * @returns transpose matrix of A

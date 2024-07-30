@@ -248,12 +248,22 @@ vector<double>* Matrix::colBackwardElimination(vector<double>* b) {
     return b;
 }
 
-vector<vector<double>>* Matrix::choleskyFactor() {
+vector<vector<double>>* Matrix::choleskyFactor(string mode) {
     if (rows != cols) {
         cout << "Matriz not square" << endl;
         return nullptr;
     }
 
+    if (mode == "inner") return innerProdCholeskyFactor();
+
+    if (mode == "outer") return outerProdCholeskyFactor(vector<vector<double>> ((*this->matrix)), new vector<vector<double>>(rows, vector<double>(cols, 0)), 0, 0);
+
+    cout << "Only allowed inner/outer product form" << endl;
+    return nullptr;
+}
+
+/// Inner-product form of Cholesky decomposition 
+vector<vector<double>>* Matrix::innerProdCholeskyFactor() {
     // Copy 'matrix' into 'R'
     vector<vector<double>>* R = new vector<vector<double>>(*matrix);
 
@@ -297,6 +307,35 @@ vector<vector<double>>* Matrix::choleskyFactor() {
     return R;
 }
 
+vector<vector<double>>* Matrix::outerProdCholeskyFactor(vector<vector<double>> A, vector<vector<double>>* R, int row, int col) {
+    // Basis case: 0x0 Matrix, a trivial case   
+    if (row == rows || col == cols) return R;
+
+    // r[1][1] = sqrt(a[1][1])
+    (*R)[row][col] = sqrt(A[row][col]);
+    vector<double>* S = new vector<double>();
+    for (int i = col+1; i < (*R)[0].size(); i++) {
+        S->push_back((1 / (*R)[row][col]) * A[row][i]);  // s^T = r[1][1]^(-1) * b^T
+        (*R)[row][i] = S->back();  // Also put the values in R
+    }
+
+    // Outer product. That's why this method is called Outer Product Form of Cholesky's Method
+    vector<vector<double>>* SS = outerProduct(S, transpose(S));
+
+    for (int i = 0; i < SS->size(); i++)
+    for (int j = 0; j < SS[0].size(); j++)
+        // Fixing the indexes so we can use the same matrix through all recursive calls.
+        A[row + i + 1][col + j + 1] -= (*SS)[i][j];
+
+    // Deallocating memory
+    delete S; 
+    delete SS;
+
+    outerProdCholeskyFactor(A, R, row+1, col+1);
+
+    return R;
+}
+
 vector<vector<double>>* Matrix::transpose() {
     vector<vector<double>>* transpose = new vector<vector<double>>(rows, vector<double>(cols, 0.0));
 
@@ -304,6 +343,25 @@ vector<vector<double>>* Matrix::transpose() {
     for (int j = 0; j < cols; j++)
     (*transpose)[j][i] = (*matrix)[i][j];
     return transpose;
+}
+
+vector<double>* Matrix::transpose(vector<double>* X) {
+    vector<double>* transpose = new vector<double>();
+
+    for (int i = 0; i < X->size(); i++) transpose->push_back((*X)[i]);
+    return transpose;
+}
+
+vector<vector<double>>* Matrix::outerProduct(vector<double>* u, vector<double>* v) {
+    int rows = u->size();
+    int cols = v[0].size();
+    vector<vector<double>>* P = new vector<vector<double>>(rows, vector<double>(cols, 0));
+    
+    for (int i = 0; i < rows; i++) 
+    for (int j = 0; j < cols; j++)
+    (*P)[i][j] = (*u)[i] * (*v)[j];
+
+    return P;
 }
 
 // PRINT FUNCTIONS
