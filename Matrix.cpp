@@ -8,6 +8,7 @@
 
 #include "Matrix.h"
 #include <cmath>
+#include <iomanip>
 #include <iostream>
 #include <stdexcept>
 #include <vector>
@@ -307,7 +308,7 @@ vector<vector<double>>* Matrix::innerProdCholeskyFactor() {
     return R;
 }
 
-vector<vector<double>>* Matrix::outerProdCholeskyFactor(vector<vector<double>> A, vector<vector<double>>* R, int row, int col) {
+vector<vector<double>>* Matrix::outerProdCholeskyFactor(vector<vector<double>> A, vector<vector<double>>* R, const int row, const int col) {
     // Basis case: 0x0 Matrix, a trivial case   
     if (row == rows || col == cols) return R;
 
@@ -370,30 +371,31 @@ void Matrix::printFlops() {
     cout << "Flops counted:  " << realFlops << endl;
 }
 
-void Matrix::printMatrix() {
-    vector<vector<double>>::iterator row;
-    vector<double>::iterator col;
-
-    cout << "A: [";
-    for (row = matrix->begin(); row != matrix->end(); row++) {
-        for (col = row->begin(); col != row->end(); col++)
-            cout << "\t" << *col;
+void Matrix::print() {
+    cout << "Matrix:" << endl << "[";
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) cout << "\t" << (*matrix)[i][j];
+        if (i == rows - 1) cout << " ]";
         cout << endl;
     }
-    cout << "\t]" << endl;
 }
 
-void Matrix::printMatrix(vector<vector<double>>* A) {
-    vector<vector<double>>::iterator row;
-    vector<double>::iterator col;
+void Matrix::print(const vector<double>* v) {
+    cout << "[ ";
+    for (double value : (*v)) cout << value << " ";
+    cout << "]" << endl;
+}
 
-    cout << "A: [";
-    for (row = A->begin(); row != A->end(); row++) {
-        for (col = row->begin(); col != row->end(); col++)
-            cout << "\t" << *col;
+void Matrix::print(const vector<vector<double>>* A) {
+    int rows = A->size();
+    int cols = A[0].size();
+
+    cout << "[";
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) cout << "\t" << (*A)[i][j];
+        if (i == rows - 1) cout << " ]";
         cout << endl;
     }
-    cout << "\t]" << endl;
 }
 
 

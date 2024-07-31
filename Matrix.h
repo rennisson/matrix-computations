@@ -119,9 +119,11 @@ class Matrix {
          * Calculates the Cholesky's factor of matrix A and verify if A is positive definite using outer-product form.
          * In a n x n matrix, this algorithm performs n^3/3 floating operations. Recursive version.
          * 
+         * @param[in, out] A, R matrix
+         * @param[in] row, col matrix initial index for current recursive call
          * @returns Cholesky's factor if A is positive definite. Otherwise, returns NULL
          */
-        vector<vector<double>>* outerProdCholeskyFactor(vector<vector<double>> A, vector<vector<double>>* R, int row, int col);
+        vector<vector<double>>* outerProdCholeskyFactor(vector<vector<double>> A, vector<vector<double>>* R, const int row, const int col);
 
         /**
          * Matrices blocks multiplication (AX = B)
@@ -209,14 +211,21 @@ class Matrix {
         void printFlops();
 
         /// @brief Print the coefficient matrix
-        void printMatrix();
+        void print();
+
+        /**
+         * Print a vector
+         * 
+         * @param[in] v vector
+         */
+        void print(const vector<double>* v);
 
         /**
          * Print given matrix A
          * 
          * @param[in] A matrix 
          */
-        void printMatrix(vector<vector<double>>* A);
+        void print(const vector<vector<double>>* A);
 
         /**
          * Linear system solver (Ax = b) for lower triangular coefficients matrix.
