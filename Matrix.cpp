@@ -195,8 +195,8 @@ vector<double>* Matrix::colForwardElimination(vector<double>* b) {
     return b;
 }
 
-// Upper triangular matrix only
 vector<double>* Matrix::backwardElimination(vector<double>* b, const string mode) {
+    // Upper triangular matrix only
     if (b->size() < 1)          throw invalid_argument("Invalid vector");
     if (!isUpperTriangular())   throw invalid_argument("Matrix is not upper triangular");
     

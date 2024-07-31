@@ -136,20 +136,6 @@ class Matrix {
         void blockMultiply(const vector<vector<double>>* X, vector<vector<double>>* B, const int i_start, const int j_start, const int k_start, const int blocksize);
 
         /**
-         * Verify if the matrix is upper triangular
-         * 
-         * @returns 'true' if matrix is upper triangular, 'false' otherwise.
-         */
-        bool isUpperTriangular();
-
-        /**
-         * Verify if the matrix is lower triangular
-         * 
-         * @returns 'true' if matrix is lower triangular, 'false' otherwise.
-         */
-        bool isLowerTriangular();
-
-        /**
          * Transpose of a vector
          * 
          * @param[in] X vector
@@ -282,6 +268,20 @@ class Matrix {
          * @returns transpose matrix of A
          */
         vector<vector<double>>* transpose();
+
+        /**
+         * Verify if the matrix is upper triangular
+         * 
+         * @returns 'true' if matrix is upper triangular, 'false' otherwise.
+         */
+        bool isUpperTriangular();
+
+        /**
+         * Verify if the matrix is lower triangular
+         * 
+         * @returns 'true' if matrix is lower triangular, 'false' otherwise.
+         */
+        bool isLowerTriangular();
 };
 
 #endif
