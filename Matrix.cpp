@@ -11,7 +11,6 @@
 #include <iomanip>
 #include <iostream>
 #include <stdexcept>
-#include <vector>
 using namespace std;
 
 Matrix::Matrix(const int rows, const int cols) {
@@ -421,4 +420,9 @@ bool Matrix::isUpperTriangular() {
 
     cout << "Upper triangular matrix" << endl;
     return true;
+}
+
+double Matrix::getValue(int row, int col) {
+    if (row < 0 || col < 0 || row >= rows || col >= cols) throw invalid_argument("Index out of range");
+    return (*matrix)[row][col];
 }

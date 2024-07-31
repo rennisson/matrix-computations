@@ -200,6 +200,14 @@ class Matrix {
         int getFlops();
 
         /**
+         * Get value in specific index
+         * 
+         * @param[in] row, col index
+         * @return value
+         */
+        double getValue(int row, int col);
+
+        /**
          * Set a value for a given index in coefficients matrix
          * 
          * @param[in] r, c index where the value will be put in
